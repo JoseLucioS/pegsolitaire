@@ -36,9 +36,11 @@ public class Main {
             //funcao para checar o fim do jogo, seja por vitoria ou por impossibilidade de continuar
             if(GF.checkWin(board)){
                 System.out.println("Vencedor! Parabéns!");
+                GF.drawTable(board);
                 break;
-            } else if(GF.checkLoss(board)){
+            } else if(!GF.checkMoveIsPossible(board)){ //se não houver movimento possivel, é fim de jogo.
                 System.out.println("Você perdeu! Tente novamente!");
+                GF.drawTable(board);
                 break;
             }
         }

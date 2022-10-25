@@ -97,32 +97,11 @@ public class GameFunctions {
         return pegsRemaining == 1;
     }
 
-    //verifica cada pino e checa em cada direção se há um movimento válido. Caso exista, o jogo ainda não acabou
-    /*public boolean checkLoss(String board[][]){
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                if(board[i][j] == "1"){
-                    //checa movimento válido na esquerda
-                    if(board[i][j-2] == "0" && board[i][j-1] == "1"){
-                        return false;
-                    } else if(board[i][j+2] == "0" && board[i][j+1] == "1"){//checa movimento válido na direita
-                        return false;
-                    } else if(board[i-2][j] == "0" && board[i-1][j] == "1"){//checa movimento válido acima
-                        return false;
-                    } else if(board[i+2][j] == "0" && board[i+1][j] == "1"){//checa movimento válido abaixo
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }*/
-
     public boolean checkMoveIsPossible(String board[][]){
         boolean result;
 
         for (int i = 0; i < 7; i++) {
-            if(i < 2 && i > 4){
+            if(i < 2 || i > 4){
                 result = threeRowCheck(i, board); //checando as linhas de 3 colunas
             } else {
                 result = sevenRowCheck(i, board); //checando as linhas de 7 colunas
@@ -136,7 +115,7 @@ public class GameFunctions {
 
         //checando as colunas de 3 linhas
         for (int i = 0; i < 7; i++) {
-            if(i < 2 && i > 4){
+            if(i < 2 || i > 4){
                 result = threeColCheck(i, board); //checando as colunas de 3 linhas
             } else {
                 result = sevenColCheck(i, board); //checando as colunas de 7 linhas
@@ -148,7 +127,7 @@ public class GameFunctions {
         return false;
     }
 
-    public boolean threeRowCheck(int row, String board[][]){
+    private boolean threeRowCheck(int row, String board[][]){
         //checando se existe movimento válido nas linhas de 3 colunas
         if(board[row][2] == "1" && board[row][3] == "1" && board[row][4] == "0"){
             return true;
@@ -159,7 +138,7 @@ public class GameFunctions {
         return false;
     }
 
-    public boolean sevenRowCheck(int row, String board[][]){
+    private boolean sevenRowCheck(int row, String board[][]){
         //checando se existe movimento válido nas linhas de 7 colunas
         for (int i = 0; i < 7; i++) {
             if(i == 0){
@@ -180,8 +159,35 @@ public class GameFunctions {
         }
         return false;
     }
-    public boolean threeColCheck(int col, String board[][]){
-        
+    private boolean threeColCheck(int col, String board[][]){
+        //checando se existe movimento válido nas colunas de 3 linhas
+        if(board[2][col] == "1" && board[3][col] == "1" && board[4][col] == "0"){
+            return true;
+        }
+        if(board[2][col] == "0" && board[3][col] == "1" && board[4][col] == "1"){
+            return true;
+        }
+        return false;
     }
-    public boolean sevenColCheck(int col, String board[][]){return false;}
+    private boolean sevenColCheck(int col, String board[][]){
+        //checando se existe movimento válido nas colunas de 7 linhas
+        for (int i = 0; i < 7; i++) {
+            if(i == 0){
+                if(board[0][col] == "1" && board[1][col] == "1" && board[2][col] == "0"){
+                    return true;
+                }
+            } else if(i == 5 || i == 6){
+                if(board[6][col] == "1" && board[5][col] == "1" && board[4][col] == "0"){
+                    return true;
+                }
+            } else {
+                if(board[i][col] == "1" && board[i+1][col] == "1"){
+                    if(board[i-1][col] == "0" || board[i-2][col] == "0"){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
