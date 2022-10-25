@@ -8,17 +8,17 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         GameFunctions GF = new GameFunctions();
-        String table[][] = new String[7][7];
+        String board[][] = new String[7][7];
 
         int row, column;
         //directions: a=left, w=up, s=down, d=right
         char direction;
 
-        GF.initializeTable(table);
+        GF.initializeTable(board);
 
 
         while(true){
-            GF.drawTable(table);
+            GF.drawTable(board);
 
             System.out.println("Selecione a linha:");
             row = input.nextInt();
@@ -31,8 +31,16 @@ public class Main {
             row--;
             column--;
 
-            GF.movePiece(row, column, direction, table);
+            GF.movePiece(row, column, direction, board);
+
             //funcao para checar o fim do jogo, seja por vitoria ou por impossibilidade de continuar
+            if(GF.checkWin(board)){
+                System.out.println("Vencedor! Parabéns!");
+                break;
+            } else if(GF.checkLoss(board)){
+                System.out.println("Você perdeu! Tente novamente!");
+                break;
+            }
         }
     }
 }
